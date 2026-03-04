@@ -3,31 +3,17 @@
   <!-- HEADER -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="fw-bold">📚 Books</h1>
-
     <% if user_signed_in? %>
       <%= link_to "+ Publish New Book", new_book_path, class: "btn btn-primary" %>
     <% end %>
   </div>
 
-  <!-- FILTER BUTTONS 
-  <div class="mb-4 d-flex gap-2">
-    <%= link_to "All Books",
-        books_path,
-        class: "btn btn-outline-secondary btn-sm" %>
-
-    <% if user_signed_in? %>
-      <%= link_to "My Publishes",
-          books_path(filter: "mine"),
-          class: "btn btn-info btn-sm text-white" %>
-    <% end %>
-  </div>
--->
   <!-- BOOK GRID -->
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 
     <% @books.each do |book| %>
       <div class="col">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm d-flex flex-column">
 
           <!-- COVER IMAGE -->
           <% if book.cover_image.attached? %>
@@ -35,12 +21,12 @@
                 class: "card-img-top",
                 style: "height: 180px; object-fit: cover;" %>
           <% else %>
-            <div class="bg-light text-center p-5 text-muted">
+            <div class="bg-light text-center p-5 text-muted d-flex align-items-center justify-content-center" style="height: 180px;">
               No Cover Image
             </div>
           <% end %>
 
-          <div class="card-body">
+          <div class="card-body flex-grow-1">
 
             <h5 class="card-title mb-1 text-truncate">
               <%= book.title %>
@@ -66,7 +52,7 @@
               <li><strong>Genre:</strong> <%= book.genre %></li>
               <li>
                 <strong>Sold:</strong>
-                <span class="badge bg-success">
+                <span class="badge bg-secondary">
                   <%= book.total_purchases %>
                 </span>
               </li>
@@ -74,20 +60,30 @@
 
           </div>
 
-          <!-- ACTION BUTTONS -->
-          <div class="card-footer bg-light d-flex gap-2">
-            <%= link_to "Show", book, class: "btn btn-success btn-sm w-100" %>
+          <!-- ACTION BUTTONS FOOTER -->
+          <div class="card-footer bg-light mt-auto">
+            
+            <!-- ROW 1: Main Actions (View & Add to Cart) -->
+            <div class="d-flex gap-2 mb-2">
+              <!-- View Button -->
+              <%= link_to "View", book, class: "btn btn-outline-primary btn-sm flex-grow-1" %>
 
+              <!-- Add to Cart Button (Hidden if it's your own book) -->
+              <% if user_signed_in? && book.user_id != current_user.id %>
+                <%= button_to 'Add To Cart', line_items_path(book_id: book.id), 
+                      method: :post, 
+                      class: "btn btn-success btn-sm flex-grow-1" %>
+              <% end %>
+            </div>
+
+            <!-- ROW 2: Owner Actions (Edit & Delete) -->
             <% if user_signed_in? && book.user_id == current_user.id %>
-              <%= link_to "Edit",
-                  edit_book_path(book),
-                  class: "btn btn-warning btn-sm w-100" %>
-
-              <%= button_to "Delete",
-                  book,
-                  method: :delete,
-                  data: { confirm: "Are you sure?" },
-                  class: "btn btn-danger btn-sm w-100" %>
+              <div class="d-flex gap-2">
+                <%= link_to "Edit", edit_book_path(book), class: "btn btn-warning btn-sm w-100" %>
+                <%= button_to "Delete", book, method: :delete, 
+                      data: { confirm: "Are you sure?" }, 
+                      class: "btn btn-outline-danger btn-sm w-100" %>
+              </div>
             <% end %>
           </div>
 

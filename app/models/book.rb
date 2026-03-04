@@ -1,8 +1,13 @@
 class Book < ApplicationRecord
   belongs_to :user
 
+  has_many :line_items, dependent: :destroy
+ 
+  has_many :carts, through: :line_items
+  
+
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }, presence: true
-  validates :description, :author, presence: true
+  validates :description, :author, :title, presence: true
   
   has_one_attached :cover_image
   has_one_attached :book_file
@@ -12,7 +17,7 @@ class Book < ApplicationRecord
   # end
 
   def self.ransackable_associations(auth_object = nil)
-    ["cover_image_attachment", "cover_image_blob", "book_file_attachment", "book_file_blob"]
+    super + ["user", "line_items", "carts","cover_image_attachment", "cover_image_blob", "book_file_attachment", "book_file_blob"]
   end
 
 

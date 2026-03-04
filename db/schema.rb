@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_12_082602) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_02_094544) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer "author_id"
     t.string "author_type"
@@ -79,6 +79,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_082602) do
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
+  create_table "carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "cart_id", null: false
+    t.datetime "created_at", null: false
+    t.decimal "price"
+    t.integer "quantity"
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_line_items_on_book_id"
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -105,5 +123,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_12_082602) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "books", "users"
+  add_foreign_key "carts", "users"
+  add_foreign_key "line_items", "books"
+  add_foreign_key "line_items", "carts"
   add_foreign_key "messages", "users"
 end

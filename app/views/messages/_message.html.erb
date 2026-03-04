@@ -1,5 +1,23 @@
 <!-- app/views/messages/_message.html.erb -->
-<div class="message-row" data-sender-id="<%= message.user_id %>">
-  <strong><%= message.user.email %>:</strong>
-  <p><%= message.content %></p>
+<% is_me = message.user == current_user %>
+
+<div class="message-row d-flex mb-3 <%= is_me ? 'justify-content-end' : 'justify-content-start' %>" data-sender-id="<%= message.user_id %>">
+  
+  <div class="card border-0 shadow-sm <%= is_me ? 'bg-primary text-white' : 'bg-light' %>" style="max-width: 70%; border-radius: 1rem;">
+    
+    <!-- Header: Small text for email -->
+    <div class="card-header border-0 bg-transparent pb-1 pt-2 px-3">
+      <small class="fw-bold <%= is_me ? 'text-white-50' : 'text-muted' %>">
+        <%= message.user.name %>
+      </small>
+    </div>
+
+    <!-- Body: Larger text for content -->
+    <div class="card-body pt-0 pb-2 px-3">
+      <p class="card-text mb-0">
+        <%= message.content %>
+      </p>
+    </div>
+
+  </div>
 </div>

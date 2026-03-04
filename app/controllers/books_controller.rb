@@ -17,7 +17,7 @@ class BooksController < ApplicationController
     #   Book.all
     # end
 
-    @books = Book.all # Start with everything
+    @books = Book.all 
 
     @books = @books.where(user_id: params[:user_id]) if params[:user_id].present?
 

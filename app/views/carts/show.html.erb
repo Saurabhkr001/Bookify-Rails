@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <h1>My Shopping Cart</h1>
+
+  <% if @cart.line_items.any? %>
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Price</th>
+          <th style="width: 150px;">Qty</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart.line_items.each do |item| %>
+          <tr>
+            <td><%= item.book.title %></td>
+            <td><%= number_to_currency item.price %></td>
+            
+            <!-- UPDATED QUANTITY SECTION -->
+            <td>
+              <div class="d-flex align-items-center">
+                <%= button_to '-', line_item_path(item, quantity: 'decrease'), 
+                      method: :patch, 
+                      class: 'btn btn-sm btn-outline-secondary' %>
+                
+                <span class="mx-3 fw-bold"><%= item.quantity %></span>
+                
+                <%= button_to '+', line_item_path(item, quantity: 'increase'), 
+                      method: :patch, 
+                      class: 'btn btn-sm btn-outline-secondary' %>
+              </div>
+            </td>
+            <!-- END UPDATED SECTION -->
+
+            <td><%= number_to_currency item.total_price %></td>
+            <td><%= link_to 'Remove', line_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger' %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="3" class="text-end"><strong>Total:</strong></td>
+          <td><strong><%= number_to_currency @cart.total_price %></strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Continue Shopping', books_path, class: 'btn btn-outline-primary' %>
+      <%= link_to 'Checkout', '#', class: 'btn btn-success' %>
+    </div>
+
+  <% else %>
+    <div class="text-center mt-5">
+      <p class="lead">Your cart is empty.</p>
+      <%= link_to 'Browse Books', books_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

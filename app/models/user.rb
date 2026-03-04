@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :books, dependent: :destroy
+  has_one :cart, dependent: :destroy
+
 
   has_many :sent_messages, class_name: 'Message', foreign_key: 'user_id'
   has_many :received_messages, class_name: 'Message', foreign_key: 'recipient_id'
@@ -15,7 +17,7 @@ class User < ApplicationRecord
     self.admin == true
   end
 
-  # def inspect
-  #   super
-  # end
+  def inspect
+    super
+  end
 end

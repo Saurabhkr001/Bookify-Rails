@@ -5,9 +5,6 @@ gem "rails", "~> 8.1.1"
 
 gem "dotenv-rails", groups: [ :development, :test ]
 
-
-# We REMOVED "propshaft" because we are now using "sprockets-rails" for Active Admin
-
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 
@@ -86,8 +83,17 @@ group :development do
   gem "web-console"
 end
 
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+end
+
+gem "faker"
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
 end
+# gem "pay", "~> 11.4"
+# gem "stripe", "~> 18.3"

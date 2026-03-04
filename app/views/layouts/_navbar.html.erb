@@ -3,7 +3,7 @@
 
     <!-- BRAND -->
     <%= link_to root_path, class: "navbar-brand fw-bold d-flex align-items-center gap-2" do %>
-      📚 <span>Books Store</span>
+      📚 <span>Bookify</span>
     <% end %>
 
     <!-- TOGGLER -->
@@ -37,14 +37,12 @@
           </a>
 
           <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <!-- DEFAULT: SHOW ALL -->
             <li>
               <%= link_to "📖 All Books",
                   books_path,
                   class: "dropdown-item #{'active' if params[:user_id].blank? && params[:filter].blank?}" %>
             </li>
 
-            <!-- MY PUBLISHES -->
             <% if user_signed_in? %>
               <li>
                 <%= link_to "✍️ My Publishes",
@@ -82,8 +80,8 @@
 
         <% if user_signed_in? %>
 
-          <li class="nav-item text-light small px-2">
-            Welcome, <%= current_user.name.presence || current_user.email %>
+          <li class="nav-item text-light small px-3">
+            Signed_in as <%= current_user.name.presence || current_user.email %>
           </li>
 
           <li class="nav-item">

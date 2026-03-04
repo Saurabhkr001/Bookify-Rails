@@ -21,7 +21,6 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
 #   )
 # end
 
-# # Create one Librarian
 # User.create!(
 #   name: "Main Librarian",
 #   email: "librarian@library.com",

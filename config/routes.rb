@@ -1,6 +1,15 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+
+  # stripe 
+  
+  resources :payments, only: [:create]
+
+  get '/success', to: 'payments#success'
+  get '/cancel', to: 'payments#cancel'
+
+  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -30,4 +39,5 @@ Rails.application.routes.draw do
 
   # Line Item routes (for adding/removing items)
   resources :line_items, only: [:create, :destroy, :update]
+
 end

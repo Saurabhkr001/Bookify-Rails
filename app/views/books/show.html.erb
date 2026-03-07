@@ -63,9 +63,10 @@
           <%= link_to "Back", books_path, class: "btn btn-secondary" %>
 
           <%= button_to "Buy this Book",
-              buy_book_path(@book),
+              payments_path(book_id: @book.id),
               method: :post,
               class: "btn btn-success" %>
+
 
           <%= link_to "View Purchase Stats",
               purchased_book_path(@book),

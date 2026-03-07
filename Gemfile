@@ -86,6 +86,9 @@ end
 group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
+
+  # byebug
+  gem "byebug"
 end
 
 gem "faker"
@@ -95,5 +98,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-# gem "pay", "~> 11.4"
-# gem "stripe", "~> 18.3"
+gem "pay", "~> 11.4"
+gem "stripe", "~> 18.3"

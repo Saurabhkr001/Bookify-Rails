@@ -48,9 +48,11 @@
 
     <div class="d-flex justify-content-between">
       <%= link_to 'Continue Shopping', books_path, class: 'btn btn-outline-primary' %>
-      <%= link_to 'Checkout', '#', class: 'btn btn-success' %>
+      <%= button_to 'Checkout', payments_path, method: :post, class: 'btn btn-success' %>
     </div>
 
+
+              
   <% else %>
     <div class="text-center mt-5">
       <p class="lead">Your cart is empty.</p>
